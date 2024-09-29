@@ -58,23 +58,22 @@ const Customizer = () => {
     }
   };
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
   const handleSubmit = async (type) => {
     if (!prompt) return alert("Please enter a prompt");
     try {
       //call backend to generate ai image
       setGeneratingImg(true); //start loading
-      const response = await fetch(
-        "https://project-threejs-ai-customiser.onrender.com/api/v1/dalle",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            prompt,
-          }),
-        }
-      );
+      const response = await fetch(`${API_URL}/api/v1/dalle`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          prompt,
+        }),
+      });
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
